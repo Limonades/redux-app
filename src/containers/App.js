@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { User } from '../components/User';
 import { Page } from '../components/Page';
+import { setYear } from '../actions/PageActions';
 
 import logo from '../logo.svg';
 
@@ -10,7 +11,7 @@ import './App.scss';
 
 class App extends Component {
   render() {
-    const { user, page } = this.props;
+    const { user, page, setYearAction } = this.props;
 
     return (
       <div className="App">
@@ -19,7 +20,7 @@ class App extends Component {
           <h1 className="App-title">Favorite photos</h1>
         </header>
         <User name={user.name} />
-        <Page photos={page.photos} year={page.year} />
+        <Page photos={page.photos} year={page.year} setYear={setYearAction} />
       </div>
     );
   }
@@ -39,5 +40,12 @@ const mapStateToProps = store => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  setYearAction: year => dispatch(setYear(year)),
+});
+
 // в наш компонент App, с помощью connect(mapStateToProps)
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
